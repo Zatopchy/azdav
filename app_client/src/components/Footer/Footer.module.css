@@ -1,0 +1,12 @@
+footer {
+  height: 59px;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.footer {
+  display: table;
+  width: 100%;
+  background: #e0e0e0;
+  height: 60px;
+}
