@@ -7,6 +7,7 @@ const SystemSettings = (props) => {
   let newMinLengthPassBody = state.minLengthPassSetting;
   let ghostQuotaSetting = state.ghostQuotaSetting;
   let ghostMinLengthPassSetting = state.ghostMinLengthPassSetting;
+  let responseSaveSettings = state.responseSaveSettings;
 
   let onNewQuotaChange = (e) => {
     let QuotaBody = e.target.value;
@@ -20,7 +21,8 @@ const SystemSettings = (props) => {
 
   let onSaveSystemSettingsClick = (e) => {
     props.saveSettings(
-      props.SaveSystemSettings,
+      props.saveSystemSettings,
+      props.responseSaveSettings,
       newQuotaBody,
       newMinLengthPassBody
     );
@@ -56,6 +58,10 @@ const SystemSettings = (props) => {
               onClick={onSaveSystemSettingsClick}
               value="Сохранить настройки"
             />
+
+            <div className="alert-primary text-center mt-4">
+              {responseSaveSettings}
+            </div>
           </form>
         </div>
       </div>

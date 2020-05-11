@@ -137,7 +137,7 @@ const AddUsers = (props) => {
               <div className="col-sm-7">
                 <input
                   type="email"
-                  className="form-control"
+                  className="form-control is-valid"
                   id="inputPassword"
                   placeholder="example@mail.ru"
                   value={newEmailBody}

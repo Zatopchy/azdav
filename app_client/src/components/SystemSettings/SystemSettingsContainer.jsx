@@ -4,12 +4,23 @@ import SystemSettings from "./SystemSettings";
 import {
   updateNewQuotaChangeAC,
   updateNewMinLengthPassChangeAC,
-  SaveSystemSettingsAC,
+  saveSystemSettingsAC,
+  updateGhostQuotaSettingAC,
+  updateGhostMinLengthPassSettingAC,
+  responseSaveSettingsAC,
 } from "../../redux/reducers/settings-reducer";
-import { saveSettings } from "../../api/systemSettingsAPI";
+import { saveSettings, getSettings } from "../../api/systemSettingsAPI";
 
 class SystemSettingsContainer extends Component {
   componentDidMount() {
+    getSettings(
+      this.props.updateGhostQuotaSetting,
+      this.props.updateGhostMinLengthPassSetting
+    );
+  }
+
+  componentWillUnmount() {
+    this.props.responseSaveSettings("");
   }
 
   render() {
@@ -28,5 +39,8 @@ let mapStateToProps = (state) => {
 export default SystemSettingsContainer = connect(mapStateToProps, {
   updateNewQuotaChange: updateNewQuotaChangeAC,
   updateNewMinLengthPass: updateNewMinLengthPassChangeAC,
-  SaveSystemSettings: SaveSystemSettingsAC,
+  updateGhostQuotaSetting: updateGhostQuotaSettingAC,
+  updateGhostMinLengthPassSetting: updateGhostMinLengthPassSettingAC,
+  saveSystemSettings: saveSystemSettingsAC,
+  responseSaveSettings: responseSaveSettingsAC,
 })(SystemSettingsContainer);

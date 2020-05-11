@@ -57,10 +57,10 @@ export const searchUserOne = (
   });
 };
 
-export const lockUserOne = (_lockUser, userId) => {
+export const lockUserOne = (_lockUser, _userId) => {
   return instanceUserManagement.get(`getUser`).then((res) => {
     for (let i = 0; i !== res.data.length; i++) {
-      if (res.data[i].id === userId) {
+      if (res.data[i].id === _userId) {
         _lockUser(res.data[i].login);
       }
     }

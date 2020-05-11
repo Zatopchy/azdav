@@ -4,7 +4,22 @@ const instanceSystemSettings = axios.create({
   baseURL: "/appSettingsAPI/",
 });
 
-export const saveSettings = (_SaveSystemSettings, _quota, _legthPass) => {
+export const getSettings = (_getQuota, _getMinLengthPass) => {
+  debugger;
+  return instanceSystemSettings.get(`getSettings`).then((res) => {
+    debugger;
+    var dataSettings = res.data.systemSettings;
+    _getQuota(dataSettings.quota);
+    _getMinLengthPass(dataSettings.minLengthPass);
+  });
+};
+
+export const saveSettings = (
+  _saveSystemSettings,
+  _responseSaveSettings,
+  _quota,
+  _legthPass
+) => {
   debugger;
   return instanceSystemSettings
     .post(`saveSettings`, {
@@ -13,7 +28,8 @@ export const saveSettings = (_SaveSystemSettings, _quota, _legthPass) => {
     })
     .then(function (response) {
       console.log(response.data); // Это полноценный ответ сервера на POST запрос
-      _SaveSystemSettings();
+      _saveSystemSettings();
+      _responseSaveSettings(response.data.responseSaveData);
     })
     .catch(function (error) {
       console.log(error);
