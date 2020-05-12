@@ -5,14 +5,19 @@ import {
   updateNewImportChangeAC,
   loadImportNewAC,
 } from "../../redux/reducers/import-reducer";
+import { uploadImportFile } from "../../api/importAPI";
 
 class ImportContainer extends Component {
   componentDidMount() {}
 
+  componentWillUnmount() {
+    this.props.updateNewImportChange("");
+    this.props.loadImportNew("");
+  }
   render() {
     return (
       <div>
-        <Import {...this.props} />
+        <Import {...this.props} uploadImportFile={uploadImportFile} />
       </div>
     );
   }

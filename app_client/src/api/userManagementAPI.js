@@ -70,7 +70,7 @@ export const lockUserOne = (_lockUser, _userId) => {
 export const postData = () => {
   return instanceUserManagement
     .post(`search`, {
-      post: "Фредди",
+      post: "Здесь должно быть значение",
     })
     .then(function (response) {
       console.log(response.data); // Это полноценный ответ сервера на POST запрос

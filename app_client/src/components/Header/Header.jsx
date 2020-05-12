@@ -1,8 +1,12 @@
 import React from "react";
 import s from "./Header.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const Header = (props) => {
+  let state = props.header;
+  let onExportFileClick = () => {
+    props.getExportFile();
+  };
   return (
     <div>
       <header className="navbar-dark bg-dark">
@@ -28,11 +32,12 @@ const Header = (props) => {
                   <NavLink className="ml-auto" to="/addusers">
                     <i className="fas fa-user-plus text-white mr-4"></i>
                   </NavLink>
-
-                  <NavLink className="ml-auto" to="/export">
-                    <i className="fas fa-download text-white mr-4"></i>
-                  </NavLink>
-
+                  <Link to="settings.json" target="settings.json" download>
+                    <i
+                      className="fas fa-download ml-auto text-white mr-4"
+                      onClick={onExportFileClick}
+                    ></i>
+                  </Link>
                   <NavLink className="ml-auto" to="/import">
                     <i className="fas fa-upload text-white mr-4"></i>
                   </NavLink>

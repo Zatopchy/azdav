@@ -3,6 +3,7 @@ const LOAD_IMPORT_NEW = "LOAD_IMPORT_NEW";
 
 let initialState = {
   newImportBody: "",
+  responseImportBody: "",
 };
 
 const importReducer = (state = initialState, action) => {
@@ -16,6 +17,7 @@ const importReducer = (state = initialState, action) => {
     case LOAD_IMPORT_NEW: {
       return {
         ...state,
+        responseImportBody: action.responseImportBody,
       };
     }
     default:
@@ -28,8 +30,9 @@ export const updateNewImportChangeAC = (newImportBody) => ({
   newImportBody: newImportBody,
 });
 
-export const loadImportNewAC = () => ({
+export const loadImportNewAC = (responseImportBody) => ({
   type: LOAD_IMPORT_NEW,
+  responseImportBody: responseImportBody,
 });
 
 export default importReducer;

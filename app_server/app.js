@@ -8,6 +8,8 @@ const bodyParser = require("body-parser");
 var userManagementAPIRouter = require("./routes/userManagementAPI");
 var addUserAPIRouter = require("./routes/addUserAPI");
 var appSettingsAPIRouter = require("./routes/appSettingsAPI");
+var headerAPIRouter = require("./routes/headerAPI");
+var importAPIRouter = require("./routes/importAPI");
 
 var app = express();
 
@@ -25,19 +27,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/userManagementAPI", userManagementAPIRouter);
 app.use("/addUserAPI", addUserAPIRouter);
 app.use("/appSettingsAPI", appSettingsAPIRouter);
+app.use("/headerAPI", headerAPIRouter);
+app.use("/importAPI", importAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render("error");
 });

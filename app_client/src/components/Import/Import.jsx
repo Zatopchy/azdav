@@ -4,14 +4,17 @@ const Import = (props) => {
   let state = props.importPage;
 
   let newImportBody = state.newImportBody;
+  let newResponseImportBody = state.responseImportBody;
 
   let onUpdateNewImportChangeBody = (e) => {
-    let newImportChangeBody = e.target.files[0].name;
+    let newImportChangeBody = e.target.files[0];
     props.updateNewImportChange(newImportChangeBody);
   };
 
   let onLoadImportNewClick = () => {
-    props.loadImportNew();
+    if (newImportBody) {
+      props.uploadImportFile(props.loadImportNew, newImportBody);
+    }
   };
 
   return (
@@ -27,7 +30,7 @@ const Import = (props) => {
             action="/upload"
             method="post"
             enctype="multipart/form-data"
-            class="form-group was-validated"
+            className="form-group was-validated"
           >
             <input
               type="file"
@@ -37,16 +40,25 @@ const Import = (props) => {
               required
             />
 
-            <label className="custom-file-label" data-browse="Выбрать"></label>
-            <div class="invalid-feedback">Файл не выбран</div>
-            <div class="valid-feedback">{newImportBody}</div>
+            <label className="custom-file-label" data-browse="Выбрать">
+              {newImportBody.name}
+            </label>
+            <div className="invalid-feedback">Файл не выбран</div>
+            <div className="valid-feedback">
+              {newImportBody.size ? newImportBody.size + ` байт` : null}
+            </div>
           </form>
+          <div className="alert-primary text-center m-4">
+            {newResponseImportBody}
+          </div>
         </div>
         <div className="col-md-5 p-0 ml-4">
           <button
             type="submit"
             onClick={onLoadImportNewClick}
-            class="btn btn-primary ml-auto"
+            className={`btn btn-primary ml-auto ${
+              newImportBody ? null : `disabled`
+            }`}
           >
             Загрузить
           </button>

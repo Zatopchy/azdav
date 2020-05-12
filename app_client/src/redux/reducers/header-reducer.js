@@ -1,6 +1,6 @@
 const EXPORT_DATA = "EXPORT_DATA";
 
-let initialState = () => {};
+let initialState = {};
 
 const headerReducer = (state = initialState, action) => {
   switch (action.type) {
