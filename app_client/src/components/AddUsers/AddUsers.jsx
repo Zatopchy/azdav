@@ -91,8 +91,8 @@ const AddUsers = (props) => {
                 <input
                   type="text"
                   className={`form-control ${
-                    newErrEmptyLogin ? `is-valid` : `is-invalid`
-                  }`}
+                    newErrEmptyLogin ? `is-valid ` : `is-invalid `
+                  } ${s.login}`}
                   value={newLoginBody}
                   onChange={onNewLoginChange}
                 />

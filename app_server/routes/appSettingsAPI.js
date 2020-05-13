@@ -17,7 +17,7 @@ router.post("/saveSettings", (req, res) => {
   fs.writeFile(settingsPath, JSON.stringify(req.body), (err) => {
     if (err) {
       console.log("error writing file: " + settingsPath);
-      res.send({ responseSaveData: "Ошибка при сохрании" });
+      res.send({ responseSaveData: "Ошибка при сохранении" });
     } else {
       res.send({ responseSaveData: "Настройки сохранены успешно" });
     }

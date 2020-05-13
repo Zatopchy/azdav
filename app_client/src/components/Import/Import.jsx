@@ -41,11 +41,11 @@ const Import = (props) => {
             />
 
             <label className="custom-file-label" data-browse="Выбрать">
-              {newImportBody.name}
+              {newImportBody ? newImportBody.name : null}
             </label>
             <div className="invalid-feedback">Файл не выбран</div>
             <div className="valid-feedback">
-              {newImportBody.size ? newImportBody.size + ` байт` : null}
+              {newImportBody ? newImportBody.size + ` байт` : null}
             </div>
           </form>
           <div className="alert-primary text-center m-4">

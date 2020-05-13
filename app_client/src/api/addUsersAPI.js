@@ -37,7 +37,7 @@ export const createUserNew = (
     })
     .then(function (response) {
       _addUserNew();
-      console.log(response.data); // Это полноценный ответ сервера на POST запрос
+      console.log(response); // Это полноценный ответ сервера на POST запрос
       // Проверка валидации после отправки данных формы
       _checkAddUserNew();
     })

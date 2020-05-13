@@ -1,1 +1,5 @@
-echo ������ | passwd --stdin ������������
+ID,LOGIN,EMAIL,FIO,QUOTA
+504,poplol,ghfgh,vcbcv,2048
+503,pasha,Pashtet@mail.ru,Павел Георгиевич Скворцов,6096
+502,mariya,Masha@mail.ru,Кабачкова Мария Ивановна,2048
+501,sasha,ghfgh,sdcs,2048
