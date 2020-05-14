@@ -33,8 +33,16 @@ const UserManagement = (props) => {
     props.deleteUser();
   };
 
-  let onLockUser = (e) => {
-    props.lockUser();
+  let onLockUser = (lockUserId, lockUserLogin) => {
+    var userId = lockUserId;
+    var userLogin = lockUserLogin;
+    props.lockUserOne(props.lockUser, userId, userLogin);
+  };
+
+  let onUnLockUser = (unlockUserId, unLockUserLogin) => {
+    var userIdInNumber = unlockUserId;
+    var userLogin = unLockUserLogin;
+    props.unLockUserOne(props.unLockUser, userIdInNumber, userLogin);
   };
 
   let userslist = state.users.map((p) => (
@@ -50,15 +58,19 @@ const UserManagement = (props) => {
       <th>
         <NavLink className={s.userLink} to={`/users/${p.userId}`}>
           <i
-            onClick={onLockUser}
-            className={`fas fa-ban mr-4 ${p.userLock ? s.block : null}`}
+            onClick={() => onLockUser(p.userId, p.userLogin)}
+            className={`fas fa-ban mr-4 ${
+              p.userLock === "true" ? s.block : null
+            }`}
           ></i>
         </NavLink>
         <NavLink className={s.userLink} to={`/users/${p.userId}`}>
           <i
-            onClick={onLockUser}
+            onClick={() => onUnLockUser(p.userId, p.userLogin)}
             value={p.userId}
-            className={`fas fa-unlock mr-4 ${p.userLock ? null : s.unlock}`}
+            className={`fas fa-unlock mr-4 ${
+              p.userLock === "true" ? null : s.unlock
+            }`}
           ></i>
         </NavLink>
         <NavLink className={s.userLink} to={`/users/${p.userId}`}>
@@ -114,7 +126,7 @@ const UserManagement = (props) => {
               <tbody>{userslist}</tbody>
             </table>
             <div className="text-center">
-              {isFetching == true ? (
+              {isFetching === true ? (
                 <div className="spinner-border" role="status">
                   <span className="sr-only">Loading...</span>
                 </div>

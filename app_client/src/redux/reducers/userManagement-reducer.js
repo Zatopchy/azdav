@@ -1,4 +1,5 @@
 const LOCK_USER = "LOCK_USER";
+const UNLOCK_USER = "UNLOCK_USER";
 const EDIT_USER = "EDIT_USER";
 const AREA_USER_SEARCH = "AREA_USER_SEARCH";
 const SEARCH_USER = "SEARCH_USER";
@@ -40,7 +41,23 @@ const userManagementReducer = (state = initialState, action) => {
     case LOCK_USER: {
       return {
         ...state,
-        userLock: action.lockUserLogin,
+        users: state.users.map((u) => {
+          if (u.userId === action.lockUserId) {
+            return { ...u, userLock: "true" };
+          }
+          return { ...u };
+        }),
+      };
+    }
+    case UNLOCK_USER: {
+      return {
+        ...state,
+        users: state.users.map((u) => {
+          if (u.userId === action.unLockUserId) {
+            return { ...u, userLock: "false" };
+          }
+          return { ...u };
+        }),
       };
     }
     case EDIT_USER: {
@@ -94,9 +111,13 @@ export const areaUserSearchAC = (areaUserSearchBody) => ({
   type: AREA_USER_SEARCH,
   areaUserSearchBody: areaUserSearchBody,
 });
-export const lockUserAC = (lockUserLogin) => ({
+export const lockUserAC = (lockUserId) => ({
   type: LOCK_USER,
-  lockUserLogin: lockUserLogin,
+  lockUserId: lockUserId,
+});
+export const unLockUserAC = (unLockUserId) => ({
+  type: UNLOCK_USER,
+  unLockUserId: unLockUserId,
 });
 export const editUserAC = () => ({ type: EDIT_USER });
 export const deleteUserAC = () => ({ type: DELETE_USER });

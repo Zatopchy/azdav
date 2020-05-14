@@ -57,23 +57,34 @@ export const searchUserOne = (
   });
 };
 
-export const lockUserOne = (_lockUser, _userId) => {
-  return instanceUserManagement.get(`getUser`).then((res) => {
-    for (let i = 0; i !== res.data.length; i++) {
-      if (res.data[i].id === _userId) {
-        _lockUser(res.data[i].login);
-      }
-    }
-  });
+export const lockUserOne = (_lockUser, _userId, _userLogin) => {
+  debugger;
+
+  return instanceUserManagement
+    .post(`lockUser`, {
+      lockUserId: _userId,
+      lockUserLogin: _userLogin,
+    })
+    .then(function (res) {
+      debugger;
+      _lockUser(_userId);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };
 
-export const postData = () => {
+export const unLockUserOne = (_unLockUser, _userId, _userLogin) => {
+  debugger;
+
   return instanceUserManagement
-    .post(`search`, {
-      post: "Здесь должно быть значение",
+    .post(`unLockUser`, {
+      unLockUserId: _userId,
+      unLockUserLogin: _userLogin,
     })
-    .then(function (response) {
-      console.log(response.data); // Это полноценный ответ сервера на POST запрос
+    .then(function (res) {
+      debugger;
+      _unLockUser(_userId);
     })
     .catch(function (error) {
       console.log(error);

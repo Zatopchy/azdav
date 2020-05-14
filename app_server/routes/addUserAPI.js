@@ -70,6 +70,7 @@ router.post("/createUser", (req, res) => {
           { id: "email", title: "EMAIL" },
           { id: "fio", title: "FIO" },
           { id: "quota", title: "QUOTA" },
+          { id: "isLocked", title: "ISLOCKED" },
         ],
       });
 
@@ -80,6 +81,7 @@ router.post("/createUser", (req, res) => {
           email: userEmail,
           fio: userFIO,
           quota: userQuota,
+          isLocked: false,
         },
       ];
 
@@ -93,6 +95,7 @@ router.post("/createUser", (req, res) => {
               email: data.EMAIL,
               fio: data.FIO,
               quota: data.QUOTA,
+              isLocked: data.ISLOCKED,
             });
 
             csvWriter.writeRecords(rec).then(() => {

@@ -8,24 +8,36 @@ import {
   getUserListAC,
   clearUserListAC,
   isFetchingAC,
+  unLockUserAC,
 } from "../../redux/reducers/userManagement-reducer";
 import { connect } from "react-redux";
 import UserManagement from "./UserManagement";
-import { getUsers, postData, searchUserOne } from "../../api/userManagementAPI";
+import {
+  getUsers,
+  searchUserOne,
+  lockUserOne,
+  unLockUserOne,
+} from "../../api/userManagementAPI";
 import { withRouter } from "react-router-dom";
 
 class UserManagementContainer extends Component {
   componentDidMount() {
+    debugger;
+    // console.log(this.props.match.params.userId);
     this.props.clearUserList();
     getUsers(this.props.getUserList, this.props.isFetching);
-
-    postData();
   }
 
   render() {
     return (
       <div>
-        <UserManagement {...this.props} searchUserOne={searchUserOne} />
+        <UserManagement
+          {...this.props}
+          searchUserOne={searchUserOne}
+          lockUserOne={lockUserOne}
+          unLockUserOne={unLockUserOne}
+          getUsers={getUsers}
+        />
       </div>
     );
   }
@@ -42,6 +54,7 @@ export default UserManagementContainer = connect(mapStateToProps, {
   searchUser: searchUserAC,
   updateAreaUserSearch: areaUserSearchAC,
   lockUser: lockUserAC,
+  unLockUser: unLockUserAC,
   editUser: editUserAC,
   deleteUser: deleteUserAC,
   getUserList: getUserListAC,

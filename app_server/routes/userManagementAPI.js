@@ -5,10 +5,6 @@ var { exec } = require("child_process");
 var csv = require("csv-parser");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 
-router.get("/lol", function (req, res, next) {
-  res.send("Ответ сервера");
-});
-
 router.get("/getUser", (req, res) => {
   var users = [];
   fs.createReadStream("app_settings/users.csv")
@@ -18,11 +14,10 @@ router.get("/getUser", (req, res) => {
         users.push({
           id: data.ID,
           login: data.LOGIN,
-          // pass: data.PASS,
           email: data.EMAIL,
           fio: data.FIO,
           quota: data.QUOTA,
-          isLocked: false,
+          isLocked: data.ISLOCKED,
         });
       } catch (err) {
         console.log("Ошибка записи файла");
@@ -31,41 +26,126 @@ router.get("/getUser", (req, res) => {
     .on("end", function () {
       res.send(users);
     });
-
-  // var users = [
-  //   {
-  //     id: "7",
-  //     login: "Alex",
-  //     email: "alexlol@mail.ru",
-  //     fio: "Александр Петрович Кержаков",
-  //     quota: "2000",
-  //     isLocked: true,
-  //   },
-  //   {
-  //     id: "8",
-  //     login: "Илья",
-  //     email: "ilya@mail.ru",
-  //     fio: "Илья Сергеевич Шляпин",
-  //     quota: "4096",
-  //     isLocked: true,
-  //   },
-  //   {
-  //     id: "9",
-  //     login: "Михаил",
-  //     email: "misha@mail.ru",
-  //     fio: "Михаил Олегович Спаржин",
-  //     quota: "1024",
-  //     isLocked: false,
-  //   },
-  // ];
-  // res.send(users);
 });
 
-router.post("/search", (req, res) => {
+router.post("/lockUser", (req, res) => {
   console.log(req.body);
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`
-  );
+  var usersList = [];
+  var userLogin = req.body.lockUserLogin;
+
+  var commandLockUser = `passwd -l ${userLogin}`;
+  console.log("[" + commandLockUser + "]");
+  exec(commandLockUser, (error, stdout, stderr) => {
+    if (error) {
+      console.log(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      return;
+    }
+    const csvWriter = createCsvWriter({
+      path: "app_settings/users.csv",
+      header: [
+        { id: "id", title: "ID" },
+        { id: "login", title: "LOGIN" },
+        { id: "email", title: "EMAIL" },
+        { id: "fio", title: "FIO" },
+        { id: "quota", title: "QUOTA" },
+        { id: "isLocked", title: "ISLOCKED" },
+      ],
+    });
+
+    fs.createReadStream("app_settings/users.csv")
+      .pipe(csv())
+      .on("data", function (data) {
+        try {
+          usersList.push({
+            id: data.ID,
+            login: data.LOGIN,
+            email: data.EMAIL,
+            fio: data.FIO,
+            quota: data.QUOTA,
+            isLocked: data.ISLOCKED,
+          });
+        } catch (err) {
+          console.log("Ошибка записи файла");
+        }
+      })
+      .on("end", function () {
+        usersList.forEach(function (item, i, arr) {
+          if (req.body.lockUserId == usersList[i].id) {
+            usersList[i].isLocked == "false"
+              ? ((usersList[i].isLocked = "true"),
+                (userLogin = usersList[i].login))
+              : null;
+          }
+        });
+
+        csvWriter.writeRecords(usersList);
+      });
+    res.send();
+  });
+});
+
+router.post("/unLockUser", (req, res) => {
+  console.log(req.body);
+  var usersList = [];
+  var userLogin = req.body.unLockUserLogin;
+
+  var commandUnLockUser = `passwd -u ${userLogin}`;
+  console.log("[" + commandUnLockUser + "]");
+
+  exec(commandUnLockUser, (error, stdout, stderr) => {
+    if (error) {
+      console.log(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      return;
+    }
+    const csvWriter = createCsvWriter({
+      path: "app_settings/users.csv",
+      header: [
+        { id: "id", title: "ID" },
+        { id: "login", title: "LOGIN" },
+        { id: "email", title: "EMAIL" },
+        { id: "fio", title: "FIO" },
+        { id: "quota", title: "QUOTA" },
+        { id: "isLocked", title: "ISLOCKED" },
+      ],
+    });
+
+    fs.createReadStream("app_settings/users.csv")
+      .pipe(csv())
+      .on("data", function (data) {
+        try {
+          usersList.push({
+            id: data.ID,
+            login: data.LOGIN,
+            email: data.EMAIL,
+            fio: data.FIO,
+            quota: data.QUOTA,
+            isLocked: data.ISLOCKED,
+          });
+        } catch (err) {
+          console.log("Ошибка записи файла");
+        }
+      })
+      .on("end", function () {
+        usersList.forEach(function (item, i, arr) {
+          if (req.body.unLockUserId == usersList[i].id) {
+            usersList[i].isLocked == "true"
+              ? (usersList[i].isLocked = "false")
+              : null;
+          }
+        });
+
+        csvWriter.writeRecords(usersList);
+      });
+    res.send();
+  });
 });
 
 module.exports = router;
