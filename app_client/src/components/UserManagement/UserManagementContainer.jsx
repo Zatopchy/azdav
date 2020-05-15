@@ -9,6 +9,8 @@ import {
   clearUserListAC,
   isFetchingAC,
   unLockUserAC,
+  modalUserDeleteAC,
+  closeModalUserDeleteAC,
 } from "../../redux/reducers/userManagement-reducer";
 import { connect } from "react-redux";
 import UserManagement from "./UserManagement";
@@ -17,6 +19,7 @@ import {
   searchUserOne,
   lockUserOne,
   unLockUserOne,
+  deleteUserOne,
 } from "../../api/userManagementAPI";
 import { withRouter } from "react-router-dom";
 
@@ -36,6 +39,7 @@ class UserManagementContainer extends Component {
           searchUserOne={searchUserOne}
           lockUserOne={lockUserOne}
           unLockUserOne={unLockUserOne}
+          deleteUserOne={deleteUserOne}
           getUsers={getUsers}
         />
       </div>
@@ -60,4 +64,6 @@ export default UserManagementContainer = connect(mapStateToProps, {
   getUserList: getUserListAC,
   clearUserList: clearUserListAC,
   isFetching: isFetchingAC,
+  modalUserDelete: modalUserDeleteAC,
+  closeModalUserDelete: closeModalUserDeleteAC,
 })(WithUrlDataContainerComponent);

@@ -90,3 +90,20 @@ export const unLockUserOne = (_unLockUser, _userId, _userLogin) => {
       console.log(error);
     });
 };
+
+export const deleteUserOne = (_deleteUser, _userId, _userLogin) => {
+  debugger;
+
+  return instanceUserManagement
+    .post(`deleteUser`, {
+      deleteUserId: _userId,
+      deleteUserLogin: _userLogin,
+    })
+    .then(function (res) {
+      debugger;
+      _deleteUser(_userId);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};

@@ -2,13 +2,16 @@ import React from "react";
 import s from "./UserManagement.module.css";
 import UserItem from "./UserItem/UserItem";
 import { NavLink } from "react-router-dom";
+import ModalDelete from "./ModalDelete/ModalDelete";
 
 const UserManagement = (props) => {
   let state = props.userManagementPage;
 
   let newAreaUserSearchBody = state.areaUserSearch;
-
   let isFetching = state.isFetching;
+  let isRunModalUserDelete = state.modalUserDelete.isRun;
+  let delUserId = state.modalUserDelete.userId;
+  let delUserLogin = state.modalUserDelete.userLogin;
 
   let onNewAreaUserSearchBodyChange = (e) => {
     let areaUserSearchBody = e.target.value;
@@ -29,8 +32,10 @@ const UserManagement = (props) => {
     props.editUser();
   };
 
-  let onDeleteUser = (e) => {
-    props.deleteUser();
+  let onDeleteModalCall = (delUserId, delUserLogin) => {
+    var userId = delUserId;
+    var userLogin = delUserLogin;
+    props.modalUserDelete(userId, userLogin);
   };
 
   let onLockUser = (lockUserId, lockUserLogin) => {
@@ -82,7 +87,7 @@ const UserManagement = (props) => {
         </NavLink>
         <NavLink className={s.userLink} to={`/users/${p.userId}`}>
           <i
-            onClick={onDeleteUser}
+            onClick={() => onDeleteModalCall(p.userId, p.userLogin)}
             value={p.userId}
             className={`fas fa-trash-alt ${s.trash}`}
           ></i>
@@ -133,6 +138,16 @@ const UserManagement = (props) => {
               ) : null}
             </div>
           </div>
+        </div>
+
+        <div className={isRunModalUserDelete ? `d-block` : `d-none`}>
+          <ModalDelete
+            deleteUser={props.deleteUser}
+            deleteUserOne={props.deleteUserOne}
+            closeModalUserDelete={props.closeModalUserDelete}
+            delUserId={delUserId}
+            delUserLogin={delUserLogin}
+          />
         </div>
       </main>
     </div>

@@ -7,9 +7,16 @@ const DELETE_USER = "DELETE_USER";
 const GET_USER_LIST = "GET_USER_LIST";
 const CLEAR_USER_LIST = "CLEAR_USER_LIST";
 const IS_FETCHING = "IS_FETCHING";
+const RUN_MODAL_DELETE = "RUN_MODAL_DELETE";
+const CLOSE_MODAL_DELETE = "CLOSE_MODAL_DELETE";
 
 let initialState = {
   users: [],
+  modalUserDelete: {
+    userId: null,
+    userLogin: null,
+    isRun: false,
+  },
   areaUserSearch: "",
   isFetching: false,
 };
@@ -68,6 +75,7 @@ const userManagementReducer = (state = initialState, action) => {
     case DELETE_USER: {
       return {
         ...state,
+        users: state.users.filter((el) => el.userId !== action.deleteUserId),
       };
     }
     case GET_USER_LIST: {
@@ -98,6 +106,22 @@ const userManagementReducer = (state = initialState, action) => {
         isFetching: action.boolIsFetching,
       };
     }
+    case RUN_MODAL_DELETE: {
+      return {
+        ...state,
+        modalUserDelete: {
+          isRun: true,
+          userId: action.userData.id,
+          userLogin: action.userData.login,
+        },
+      };
+    }
+    case CLOSE_MODAL_DELETE: {
+      return {
+        ...state,
+        modalUserDelete: { isRun: false, userId: null, userLogin: null },
+      };
+    }
     default:
       return state;
   }
@@ -120,7 +144,17 @@ export const unLockUserAC = (unLockUserId) => ({
   unLockUserId: unLockUserId,
 });
 export const editUserAC = () => ({ type: EDIT_USER });
-export const deleteUserAC = () => ({ type: DELETE_USER });
+export const deleteUserAC = (deleteUserId) => ({
+  type: DELETE_USER,
+  deleteUserId: deleteUserId,
+});
+export const modalUserDeleteAC = (id, login) => ({
+  type: RUN_MODAL_DELETE,
+  userData: { id, login },
+});
+export const closeModalUserDeleteAC = () => ({
+  type: CLOSE_MODAL_DELETE,
+});
 export const getUserListAC = (id, login, email, fio, quota, isLocked) => ({
   type: GET_USER_LIST,
   usersList: { id, login, email, fio, quota, isLocked },
