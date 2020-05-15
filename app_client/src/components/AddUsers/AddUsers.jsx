@@ -9,6 +9,9 @@ const AddUsers = (props) => {
   let newPassBody = state.userPass;
   let newRepeatPassBody = state.userRepeatPass;
   let newEmailBody = state.userEmail;
+  let newLevelBody = state.userLevel;
+  let newTelephoneBody = state.userTelephone;
+  let newCommentBody = state.userComment;
   let newFIOBody = state.userFIO;
   let newQuotaBody = state.userQuota;
 
@@ -33,6 +36,9 @@ const AddUsers = (props) => {
         newPassBody,
         newRepeatPassBody,
         newEmailBody,
+        newLevelBody,
+        newTelephoneBody,
+        newCommentBody,
         newFIOBody,
         newQuotaBody
       );
@@ -60,6 +66,21 @@ const AddUsers = (props) => {
   let onNewEmailChange = (e) => {
     let emailBody = e.target.value;
     props.updateNewEmailChange(emailBody);
+  };
+
+  let onNewLevelChange = (e) => {
+    let levelBody = e.target.value;
+    props.updateNewLevelChange(levelBody);
+  };
+
+  let onNewTelephoneChange = (e) => {
+    let telephoneBody = e.target.value;
+    props.updateNewTelephoneChange(telephoneBody);
+  };
+
+  let onNewCommentChange = (e) => {
+    let commentBody = e.target.value;
+    props.updateNewCommentChange(commentBody);
   };
 
   let onNewFIOChange = (e) => {
@@ -161,6 +182,41 @@ const AddUsers = (props) => {
                 <div className="invalid-feedback">Пустое поле</div>
               </div>
             </div>
+            <div className="form-group row">
+              <label className="col-sm-5 col-form-label">Уровень доступа</label>
+              <div className="col-sm-7">
+                <input
+                  type="number"
+                  min="0"
+                  className={`form-control is-valid`}
+                  value={newLevelBody}
+                  onChange={onNewLevelChange}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label className="col-sm-5 col-form-label">Телефон</label>
+              <div className="col-sm-7">
+                <input
+                  type="tel"
+                  className={`form-control is-valid`}
+                  value={newTelephoneBody}
+                  onChange={onNewTelephoneChange}
+                />
+              </div>
+            </div>
+            <div className="form-group row">
+              <label className="col-sm-5 col-form-label">Комментарий</label>
+              <div className="col-sm-7">
+                <input
+                  type="text"
+                  className={`form-control is-valid`}
+                  value={newCommentBody}
+                  onChange={onNewCommentChange}
+                />
+              </div>
+            </div>
+
             <div className="form-group row">
               <label className="col-sm-5 col-form-label">Квота</label>
               <div className="col-sm-7">

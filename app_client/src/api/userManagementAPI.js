@@ -12,6 +12,9 @@ export const getUsers = (_getUserList, _isFetching) => {
         res.data[i].id,
         res.data[i].login,
         res.data[i].email,
+        res.data[i].level,
+        res.data[i].telephone,
+        res.data[i].comment,
         res.data[i].fio,
         res.data[i].quota,
         res.data[i].isLocked
@@ -38,6 +41,9 @@ export const searchUserOne = (
           res.data[i].id,
           res.data[i].login,
           res.data[i].email,
+          res.data[i].level,
+          res.data[i].telephone,
+          res.data[i].comment,
           res.data[i].fio,
           res.data[i].quota,
           res.data[i].isLocked
@@ -47,6 +53,9 @@ export const searchUserOne = (
           res.data[i].id,
           res.data[i].login,
           res.data[i].email,
+          res.data[i].level,
+          res.data[i].telephone,
+          res.data[i].comment,
           res.data[i].fio,
           res.data[i].quota,
           res.data[i].isLocked

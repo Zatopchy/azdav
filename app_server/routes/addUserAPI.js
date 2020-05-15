@@ -18,6 +18,9 @@ router.post("/createUser", (req, res) => {
   var userLogin = req.body.postUserLogin.toLowerCase();
   var userPass = req.body.postUserPass;
   var userEmail = req.body.postUserEmail;
+  var userLevel = req.body.postUserLevel;
+  var userTelephone = req.body.postUserTelephone;
+  var userComment = req.body.postUserComment;
   var userFIO = req.body.postUserFIO;
   var userQuota = req.body.postUserQuota;
 
@@ -68,6 +71,9 @@ router.post("/createUser", (req, res) => {
           { id: "id", title: "ID" },
           { id: "login", title: "LOGIN" },
           { id: "email", title: "EMAIL" },
+          { id: "level", title: "LEVEL" },
+          { id: "telephone", title: "TELEPHONE" },
+          { id: "comment", title: "COMMENT" },
           { id: "fio", title: "FIO" },
           { id: "quota", title: "QUOTA" },
           { id: "isLocked", title: "ISLOCKED" },
@@ -79,6 +85,9 @@ router.post("/createUser", (req, res) => {
           id: systemUserID,
           login: userLogin,
           email: userEmail,
+          level: userLevel,
+          telephone: userTelephone,
+          comment: userComment,
           fio: userFIO,
           quota: userQuota,
           isLocked: false,
@@ -93,6 +102,9 @@ router.post("/createUser", (req, res) => {
               id: data.ID,
               login: data.LOGIN,
               email: data.EMAIL,
+              level: data.LEVEL,
+              telephone: data.TELEPHONE,
+              comment: data.COMMENT,
               fio: data.FIO,
               quota: data.QUOTA,
               isLocked: data.ISLOCKED,

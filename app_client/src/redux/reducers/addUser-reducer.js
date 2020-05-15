@@ -2,6 +2,10 @@ const UPDATE_NEW_LOGIN_BODY = "UPDATE_NEW_LOGIN_BODY";
 const UPDATE_NEW_PASS_BODY = "UPDATE_NEW_PASS_BODY";
 const UPDATE_NEW_REPEAT_PASS_BODY = "UPDATE_NEW_REPEAT_PASS_BODY";
 const UPDATE_NEW_EMAIL_BODY = "UPDATE_NEW_EMAIL_BODY";
+const UPDATE_NEW_LEVEL_BODY = "UPDATE_NEW_LEVEL_BODY";
+const UPDATE_NEW_TELEPHONE_BODY = "UPDATE_NEW_TELEPHONE_BODY";
+const UPDATE_NEW_COMMENT_BODY = "UPDATE_NEW_COMMENT_BODY";
+
 const UPDATE_NEW_FIO_BODY = "UPDATE_NEW_FIO_BODY";
 const UPDATE_NEW_QUOTA_BODY = "UPDATE_NEW_QUOTA_BODY";
 const ADD_USER_NEW = "ADD_USER_NEW";
@@ -14,6 +18,9 @@ let initialState = {
   userPass: "",
   userRepeatPass: "",
   userEmail: "",
+  userLevel: 0,
+  userTelephone: "",
+  userComment: "",
   userFIO: "",
   userQuota: "5",
   userMinLengthPass: 0,
@@ -37,6 +44,9 @@ const addUserReducer = (state = initialState, action) => {
         userPass: "",
         userRepeatPass: "",
         userEmail: "",
+        userLevel: "",
+        userTelephone: "",
+        userComment: "",
         userFIO: "",
       };
     }
@@ -62,6 +72,24 @@ const addUserReducer = (state = initialState, action) => {
       return {
         ...state,
         userEmail: action.emailBody,
+      };
+    }
+    case UPDATE_NEW_LEVEL_BODY: {
+      return {
+        ...state,
+        userLevel: action.levelBody,
+      };
+    }
+    case UPDATE_NEW_TELEPHONE_BODY: {
+      return {
+        ...state,
+        userTelephone: action.telephoneBody,
+      };
+    }
+    case UPDATE_NEW_COMMENT_BODY: {
+      return {
+        ...state,
+        userComment: action.commentBody,
       };
     }
     case UPDATE_NEW_FIO_BODY: {
@@ -154,6 +182,21 @@ export const updateNewRepeatPassChangeAC = (repeatPassBody) => ({
 export const updateNewEmailChangeAC = (emailBody) => ({
   type: UPDATE_NEW_EMAIL_BODY,
   emailBody: emailBody,
+});
+
+export const updateNewLevelChangeAC = (levelBody) => ({
+  type: UPDATE_NEW_LEVEL_BODY,
+  levelBody: levelBody,
+});
+
+export const updateNewTelephoneChangeAC = (telephoneBody) => ({
+  type: UPDATE_NEW_TELEPHONE_BODY,
+  telephoneBody: telephoneBody,
+});
+
+export const updateNewCommentChangeAC = (commentBody) => ({
+  type: UPDATE_NEW_COMMENT_BODY,
+  commentBody: commentBody,
 });
 
 export const updateNewFIOChangeAC = (fioBody) => ({

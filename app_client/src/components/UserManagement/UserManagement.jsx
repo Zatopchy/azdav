@@ -56,6 +56,9 @@ const UserManagement = (props) => {
         key={p.userId}
         userLogin={p.userLogin}
         userEmail={p.userEmail}
+        userLevel={p.userLevel}
+        userTelephone={p.userTelephone}
+        userComment={p.userComment}
         userFIO={p.userFIO}
         userQuota={p.userQuota}
         userLock={p.userLock}
@@ -124,6 +127,9 @@ const UserManagement = (props) => {
                   <th scope="col">Логин</th>
                   <th scope="col">E-mail</th>
                   <th scope="col">ФИО</th>
+                  <th scope="col">Доступ</th>
+                  <th scope="col">Телефон</th>
+                  <th scope="col">Комментарий</th>
                   <th scope="col">Квота</th>
                   <th scope="col">Действия</th>
                 </tr>

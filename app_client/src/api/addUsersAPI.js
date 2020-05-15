@@ -22,6 +22,9 @@ export const createUserNew = (
   _userPass,
   _userRepeatPass,
   _userEmail,
+  _userLevel,
+  _userTelephone,
+  _userComment,
   _userFIO,
   _userQuota
 ) => {
@@ -32,6 +35,9 @@ export const createUserNew = (
       postUserPass: _userPass,
       postUserRepeatPass: _userRepeatPass,
       postUserEmail: _userEmail,
+      postUserLevel: _userLevel,
+      postUserTelephone: _userTelephone,
+      postUserComment: _userComment,
       postUserFIO: _userFIO,
       postUserQuota: _userQuota,
     })

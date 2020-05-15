@@ -11,6 +11,9 @@ import {
   addUserNewAC,
   setMinLengthPassAC,
   checkAddUserNewAC,
+  updateNewLevelChangeAC,
+  updateNewTelephoneChangeAC,
+  updateNewCommentChangeAC,
 } from "../../redux/reducers/addUser-reducer";
 import { createUserNew, getAddUserSettings } from "../../api/addUsersAPI";
 
@@ -42,6 +45,9 @@ export default AddUsersContainer = connect(mapStateToProps, {
   updateNewPassChange: updateNewPassChangeAC,
   updateNewRepeatPassChange: updateNewRepeatPassChangeAC,
   updateNewEmailChange: updateNewEmailChangeAC,
+  updateNewLevelChange: updateNewLevelChangeAC,
+  updateNewTelephoneChange: updateNewTelephoneChangeAC,
+  updateNewCommentChange: updateNewCommentChangeAC,
   updateNewFIOChange: updateNewFIOChangeAC,
   updateNewQuotaChange: updateNewQuotaChangeAC,
   setMinLengthPass: setMinLengthPassAC,

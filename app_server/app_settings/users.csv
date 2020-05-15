@@ -1,5 +1,4 @@
-ID,LOGIN,EMAIL,FIO,QUOTA,ISLOCKED
-505,pasha,,Павел Алексеевич Ромашкин,2048,false
-504,alex,alex@mail.ru,Александр Владимирович Нестеров,4096,false
-503,joe,joe@mail.ru,Руслан Михайлович Астахов,2048,false
-502,mariya,Masha@mail.ru,Кабачкова Мария Ивановна,2048,false
+ID,LOGIN,EMAIL,LEVEL,TELEPHONE,COMMENT,FIO,QUOTA,ISLOCKED
+504,alex,alex@mail.ru,2,89018024241,нужно заменить пароль,Александр Владимирович Нестеров,4096,false
+503,joe,joe@mail.ru,2,89703854221,всё хорошо,Руслан Михайлович Астахов,2048,false
+502,mariya,Masha@mail.ru,1,89603452377,всё хорошо,Кабачкова Мария Ивановна,2048,false

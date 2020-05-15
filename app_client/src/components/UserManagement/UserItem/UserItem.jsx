@@ -6,6 +6,9 @@ const UserItem = (props) => {
       <th>{props.userLogin}</th>
       <th>{props.userEmail}</th>
       <th>{props.userFIO}</th>
+      <th>{props.userLevel}</th>
+      <th>{props.userTelephone}</th>
+      <th>{props.userComment}</th>
       <th>{props.userQuota} МБ</th>
     </>
   );

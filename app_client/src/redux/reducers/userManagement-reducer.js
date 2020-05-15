@@ -32,6 +32,9 @@ const userManagementReducer = (state = initialState, action) => {
             userId: action.usersList.id,
             userLogin: action.usersList.login,
             userEmail: action.usersList.email,
+            userLevel: action.usersList.level,
+            userTelephone: action.usersList.telephone,
+            userComment: action.usersList.comment,
             userFIO: action.usersList.fio,
             userQuota: action.usersList.quota,
             userLock: action.usersList.isLocked,
@@ -87,6 +90,9 @@ const userManagementReducer = (state = initialState, action) => {
             userId: action.usersList.id,
             userLogin: action.usersList.login,
             userEmail: action.usersList.email,
+            userLevel: action.usersList.level,
+            userTelephone: action.usersList.telephone,
+            userComment: action.usersList.comment,
             userFIO: action.usersList.fio,
             userQuota: action.usersList.quota,
             userLock: action.usersList.isLocked,
@@ -127,9 +133,29 @@ const userManagementReducer = (state = initialState, action) => {
   }
 };
 
-export const searchUserAC = (id, login, email, fio, quota, isLocked) => ({
+export const searchUserAC = (
+  id,
+  login,
+  email,
+  level,
+  telephone,
+  comment,
+  fio,
+  quota,
+  isLocked
+) => ({
   type: SEARCH_USER,
-  usersList: { id, login, email, fio, quota, isLocked },
+  usersList: {
+    id,
+    login,
+    email,
+    level,
+    telephone,
+    comment,
+    fio,
+    quota,
+    isLocked,
+  },
 });
 export const areaUserSearchAC = (areaUserSearchBody) => ({
   type: AREA_USER_SEARCH,
@@ -155,9 +181,29 @@ export const modalUserDeleteAC = (id, login) => ({
 export const closeModalUserDeleteAC = () => ({
   type: CLOSE_MODAL_DELETE,
 });
-export const getUserListAC = (id, login, email, fio, quota, isLocked) => ({
+export const getUserListAC = (
+  id,
+  login,
+  email,
+  level,
+  telephone,
+  comment,
+  fio,
+  quota,
+  isLocked
+) => ({
   type: GET_USER_LIST,
-  usersList: { id, login, email, fio, quota, isLocked },
+  usersList: {
+    id,
+    login,
+    email,
+    level,
+    telephone,
+    comment,
+    fio,
+    quota,
+    isLocked,
+  },
 });
 export const clearUserListAC = () => ({ type: CLEAR_USER_LIST });
 export const isFetchingAC = (boolIsFetching) => ({
