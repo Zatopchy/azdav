@@ -3,12 +3,14 @@ import s from "./UserManagement.module.css";
 import UserItem from "./UserItem/UserItem";
 import { NavLink } from "react-router-dom";
 import ModalDelete from "./ModalDelete/ModalDelete";
+import ModalEdit from "./ModalEdit/ModalEdit";
 
 const UserManagement = (props) => {
   let state = props.userManagementPage;
 
   let newAreaUserSearchBody = state.areaUserSearch;
   let isFetching = state.isFetching;
+  let isRunModalUserEdit = state.modalUserEdit.isRun;
   let isRunModalUserDelete = state.modalUserDelete.isRun;
   let delUserId = state.modalUserDelete.userId;
   let delUserLogin = state.modalUserDelete.userLogin;
@@ -28,14 +30,15 @@ const UserManagement = (props) => {
     );
   };
 
-  let onEditUser = (e) => {
-    props.editUser();
-  };
-
   let onDeleteModalCall = (delUserId, delUserLogin) => {
     var userId = delUserId;
     var userLogin = delUserLogin;
     props.modalUserDelete(userId, userLogin);
+  };
+
+  let onEditModalCall = (editUserId) => {
+    var userId = editUserId;
+    props.editModalRun(props.modalUserEdit, props.checkEditUser, userId);
   };
 
   let onLockUser = (lockUserId, lockUserLogin) => {
@@ -83,7 +86,7 @@ const UserManagement = (props) => {
         </NavLink>
         <NavLink className={s.userLink} to={`/users/${p.userId}`}>
           <i
-            onClick={onEditUser}
+            onClick={() => onEditModalCall(p.userId, p.userLogin)}
             value={p.userId}
             className={`fas fa-pen mr-4 ${s.edit}`}
           ></i>
@@ -153,6 +156,25 @@ const UserManagement = (props) => {
             closeModalUserDelete={props.closeModalUserDelete}
             delUserId={delUserId}
             delUserLogin={delUserLogin}
+          />
+        </div>
+
+        <div className={isRunModalUserEdit ? `d-block` : `d-none`}>
+          <ModalEdit
+            state={state.modalUserEdit}
+            editUserOne={props.editUserOne}
+            editUser={props.editUser}
+            minLengthPassEdit={props.minLengthPassEditAC}
+            checkEditUser={props.checkEditUser}
+            emailEdit={props.emailEdit}
+            levelEdit={props.levelEdit}
+            passEdit={props.passEdit}
+            fioEdit={props.fioEdit}
+            telephoneEdit={props.telephoneEdit}
+            commentEdit={props.commentEdit}
+            newUserPass={props.newUserPass}
+            newPassUserOne={props.newPassUserOne}
+            closeModalUserEdit={props.closeModalUserEdit}
           />
         </div>
       </main>

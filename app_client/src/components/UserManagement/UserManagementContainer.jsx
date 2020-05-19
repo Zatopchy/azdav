@@ -11,6 +11,17 @@ import {
   unLockUserAC,
   modalUserDeleteAC,
   closeModalUserDeleteAC,
+  modalUserEditAC,
+  closeModalUserEditAC,
+  emailEditAC,
+  levelEditAC,
+  passEditAC,
+  fioEditAC,
+  telephoneEditAC,
+  commentEditAC,
+  newUserPassAC,
+  minLengthPassEditAC,
+  checkEditUserAC,
 } from "../../redux/reducers/userManagement-reducer";
 import { connect } from "react-redux";
 import UserManagement from "./UserManagement";
@@ -20,15 +31,19 @@ import {
   lockUserOne,
   unLockUserOne,
   deleteUserOne,
+  editModalRun,
+  editUserOne,
+  newPassUserOne,
+  getEditUserSettings,
 } from "../../api/userManagementAPI";
 import { withRouter } from "react-router-dom";
 
 class UserManagementContainer extends Component {
   componentDidMount() {
     debugger;
-    // console.log(this.props.match.params.userId);
     this.props.clearUserList();
     getUsers(this.props.getUserList, this.props.isFetching);
+    getEditUserSettings(this.props.minLengthPassEdit);
   }
 
   render() {
@@ -41,6 +56,9 @@ class UserManagementContainer extends Component {
           unLockUserOne={unLockUserOne}
           deleteUserOne={deleteUserOne}
           getUsers={getUsers}
+          editModalRun={editModalRun}
+          editUserOne={editUserOne}
+          newPassUserOne={newPassUserOne}
         />
       </div>
     );
@@ -64,6 +82,17 @@ export default UserManagementContainer = connect(mapStateToProps, {
   getUserList: getUserListAC,
   clearUserList: clearUserListAC,
   isFetching: isFetchingAC,
+  modalUserEdit: modalUserEditAC,
+  emailEdit: emailEditAC,
+  levelEdit: levelEditAC,
+  passEdit: passEditAC,
+  fioEdit: fioEditAC,
+  telephoneEdit: telephoneEditAC,
+  commentEdit: commentEditAC,
+  minLengthPassEdit: minLengthPassEditAC,
+  checkEditUser: checkEditUserAC,
+  closeModalUserEdit: closeModalUserEditAC,
   modalUserDelete: modalUserDeleteAC,
+  newUserPass: newUserPassAC,
   closeModalUserDelete: closeModalUserDeleteAC,
 })(WithUrlDataContainerComponent);

@@ -101,8 +101,6 @@ export const unLockUserOne = (_unLockUser, _userId, _userLogin) => {
 };
 
 export const deleteUserOne = (_deleteUser, _userId, _userLogin) => {
-  debugger;
-
   return instanceUserManagement
     .post(`deleteUser`, {
       deleteUserId: _userId,
@@ -115,4 +113,62 @@ export const deleteUserOne = (_deleteUser, _userId, _userLogin) => {
     .catch(function (error) {
       console.log(error);
     });
+};
+
+export const editModalRun = (_editModalRun, _checkEditUser, _userId) => {
+  debugger;
+  return instanceUserManagement
+    .post(`editModalRun`, {
+      userId: _userId,
+    })
+    .then(function (res) {
+      // console.log(res.data.login);
+      _editModalRun(res.data);
+      _checkEditUser();
+      debugger;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const editUserOne = (_editUser, _userData) => {
+  debugger;
+  return instanceUserManagement
+    .post(`editUser`, {
+      user: _userData,
+    })
+    .then(function (res) {
+      // console.log(res.data.login);
+      _editUser(res.data);
+      debugger;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const newPassUserOne = (_newUserPass, _userLogin, _userPass) => {
+  debugger;
+  return instanceUserManagement
+    .post(`newUserPass`, {
+      login: _userLogin,
+      pass: _userPass,
+    })
+    .then(function (res) {
+      _newUserPass(res.data);
+      debugger;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const getEditUserSettings = (_setMinLengthPass) => {
+  debugger;
+  return instanceUserManagement.get(`getSettings`).then((res) => {
+    debugger;
+    var dataSettings = res.data.settingsEditUser;
+    _setMinLengthPass(dataSettings.minLengthPass);
+  });
 };

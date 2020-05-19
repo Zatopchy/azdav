@@ -20,7 +20,9 @@ router.post("/createUser", (req, res) => {
   var userEmail = req.body.postUserEmail;
   var userLevel = req.body.postUserLevel;
   var userTelephone = req.body.postUserTelephone;
-  var userComment = req.body.postUserComment;
+  var userComment = req.body.postUserComment
+    ? req.body.postUserComment
+    : `Без комментариев`;
   var userFIO = req.body.postUserFIO;
   var userQuota = req.body.postUserQuota;
 
