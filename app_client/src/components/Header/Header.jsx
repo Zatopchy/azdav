@@ -32,12 +32,12 @@ const Header = (props) => {
                   <NavLink className="ml-auto" to="/addusers">
                     <i className="fas fa-user-plus text-white mr-4"></i>
                   </NavLink>
-                  <Link to="settings.json" target="settings.json" download>
-                    <i
-                      className="fas fa-download ml-auto text-white mr-4"
-                      onClick={onExportFileClick}
-                    ></i>
-                  </Link>
+
+                  <i
+                    className="fas fa-download ml-auto text-white mr-4"
+                    onClick={onExportFileClick}
+                  ></i>
+
                   <NavLink className="ml-auto" to="/import">
                     <i className="fas fa-upload text-white mr-4"></i>
                   </NavLink>
