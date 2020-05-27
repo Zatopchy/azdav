@@ -1,0 +1,21 @@
+{
+  "name": "AZDAV",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail  \"cd app_client && npm start\" \"cd app_server && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/gkaz/azdav.git"
+  },
+  "author": "Vasin Sergey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/gkaz/azdav/issues"
+  },
+  "homepage": "https://gitlab.com/gkaz/azdav#readme",
+  "dependencies": {
+    "concurrently": "^5.2.0"
+  }
+}

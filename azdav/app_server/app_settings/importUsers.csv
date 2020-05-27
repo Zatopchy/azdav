@@ -1,0 +1,4 @@
+ID,LOGIN,EMAIL,LEVEL,TELEPHONE,COMMENT,FIO,QUOTA,ISLOCKED
+504,alex,alex@mail.ru,4,89018024241,Без комментариев,Александр Владимирович Нестеров,4096,true
+503,joe,joe@mail.ru,2,89703854221,Без комментариев,Руслан Михайлович Астахов,2048,false
+502,mariya,mariya@mail.ru,4,89503452377,Без комментариев,Кабачкова Мария Ивановна,2048,true
