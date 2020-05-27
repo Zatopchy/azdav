@@ -6,7 +6,6 @@ var csv = require("csv-parser");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const multer = require("multer");
 
-
 const storageConfig = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "app_settings");
@@ -76,7 +75,7 @@ router.post("/uploadImportFile", confImportFile.single("importFile"), function (
           var limitID = userID + 5000;
           var commandSetID = `usermod -u ${limitID} ${userLogin}`;
           users[i].id = limitID;
-          var commandSetUserQuota =  `setquota -u -F vfsv0 ${userLogin} 0 ${userQuota}M 0 0 /`
+          var commandSetUserQuota = `setquota -u -F vfsv0 ${userLogin} 0 ${userQuota}M 0 0 /`;
           // Создание пользователя в системе
           exec(commandAddUser, (error, stdout, stderr) => {
             if (error) {
@@ -85,79 +84,75 @@ router.post("/uploadImportFile", confImportFile.single("importFile"), function (
             }
             if (stderr) {
               console.log(`stderr: ${stderr}`);
+              // Установка id пользователю
+              exec(commandSetID, (error, stdout, stderr) => {
+                if (error) {
+                  console.log(`error: ${error.message}`);
+                  return;
+                }
+                if (stderr) {
+                  console.log(`stderr: ${stderr}`);
+                  return;
+                }
+              });
+              // Установка пароля для пользователя
+              exec(commandSetUserPass, (error, stdout, stderr) => {
+                if (error) {
+                  console.log(`error: ${error.message}`);
+                  return;
+                }
+                if (stderr) {
+                  console.log(`stderr: ${stderr}`);
+                  return;
+                }
+              });
+              // Установка квоты для пользователя
+              exec(commandSetUserQuota, (error, stdout, stderr) => {
+                if (error) {
+                  console.log(`error: ${error.message}`);
+                  return;
+                }
+                if (stderr) {
+                  console.log(`stderr: ${stderr}`);
+                  return;
+                }
+              });
               return;
             }
+          });
 
-            // Установка пароля для пользователя
-            exec(commandSetUserPass, (error, stdout, stderr) => {
-              if (error) {
-                console.log(`error: ${error.message}`);
-                return;
+          exec(commandAddUserWebDav, (error, stdout, stderr) => {
+            if (error) {
+              console.log(`error: ${error.message}`);
+              return;
+            }
+            if (stderr) {
+              console.log(`stderr: ${stderr}`);
+              if (userIsLocked == "true") {
+                exec(commandAddUserLockWebDav, (error, stdout, stderr) => {
+                  if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                  }
+                  if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                  }
+                });
+              } else {
+                exec(commandAddUserUnlockWebDav, (error, stdout, stderr) => {
+                  if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                  }
+                  if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                  }
+                });
               }
-              if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                return;
-              }
-            });
-
-            exec(commandAddUserWebDav, (error, stdout, stderr) => {
-              if (error) {
-                console.log(`error: ${error.message}`);
-                return;
-              }
-              if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                if (userIsLocked == 'true'){
-                  exec(commandAddUserLockWebDav, (error, stdout, stderr) => {
-                    if (error) {
-                      console.log(`error: ${error.message}`);
-                      return;
-                    }
-                    if (stderr) {
-                      console.log(`stderr: ${stderr}`);
-                      return;
-                    }
-                  });
-                } else {
-                  exec(commandAddUserUnlockWebDav, (error, stdout, stderr) => {
-                    if (error) {
-                      console.log(`error: ${error.message}`);
-                      return;
-                    }
-                    if (stderr) {
-                      console.log(`stderr: ${stderr}`);
-                      return;
-                    }
-                  });
-                }
-                return;
-              }
-
-            });
-
-            exec(commandSetUserQuota, (error, stdout, stderr) => {
-              if (error) {
-                console.log(`error: ${error.message}`);
-                return;
-              }
-              if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                return;
-              }
-            });
-
-
-            exec(commandSetID, (error, stdout, stderr) => {
-              if (error) {
-                console.log(`error: ${error.message}`);
-                return;
-              }
-              if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                return;
-              }
-            });
-
+              return;
+            }
           });
         });
 
@@ -177,30 +172,29 @@ router.post("/uploadImportFile", confImportFile.single("importFile"), function (
         });
 
         fs.createReadStream("app_settings/users.csv")
-        .pipe(csv())
-        .on("data", function (data) {
-          try {
-            users.push({
-              id: data.ID,
-              login: data.LOGIN,
-              email: data.EMAIL,
-              level: data.LEVEL,
-              telephone: data.TELEPHONE,
-              comment: data.COMMENT,
-              fio: data.FIO,
-              quota: data.QUOTA,
-              isLocked: data.ISLOCKED,
-            });
-          } catch (err) {
-            console.log("Ошибка записи файла");
-          }
-        })
-        .on("end", function () {
-          csvWriterAllUsers.writeRecords(users).then(() => {});
-        });
-           
+          .pipe(csv())
+          .on("data", function (data) {
+            try {
+              users.push({
+                id: data.ID,
+                login: data.LOGIN,
+                email: data.EMAIL,
+                level: data.LEVEL,
+                telephone: data.TELEPHONE,
+                comment: data.COMMENT,
+                fio: data.FIO,
+                quota: data.QUOTA,
+                isLocked: data.ISLOCKED,
+              });
+            } catch (err) {
+              console.log("Ошибка записи файла");
+            }
+          })
+          .on("end", function () {
+            csvWriterAllUsers.writeRecords(users).then(() => {});
+          });
       });
-      
+
     res.send({ importResponse: "Настройки успешно загружены!" });
   }
 });
