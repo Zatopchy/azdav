@@ -76,25 +76,25 @@ router.post("/uploadImportFile", confImportFile.single("importFile"), function (
           var commandSetID = `usermod -u ${limitID} ${userLogin}`;
           users[i].id = limitID;
           var commandSetUserQuota = `setquota -u -F vfsv0 ${userLogin} 0 ${userQuota}M 0 0 /`;
-          // Создание пользователя в системе
-          exec(commandAddUser, (error, stdout, stderr) => {
-            if (error) {
-              console.log(`error: ${error.message}`);
-              return;
-            }
-            if (stderr) {
-              console.log(`stderr: ${stderr}`);
-              // Установка id пользователю
-              exec(commandSetID, (error, stdout, stderr) => {
-                if (error) {
-                  console.log(`error: ${error.message}`);
-                  return;
-                }
-                if (stderr) {
-                  console.log(`stderr: ${stderr}`);
-                  return;
-                }
-              });
+
+          let addUserPromice = new Promise((resolve, reject) => {
+            // Создание пользователя в системе
+            exec(commandAddUser, (error, stdout, stderr) => {
+              if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+              }
+              if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+              }
+              resolve("Пользователь создался");
+            });
+          });
+
+          addUserPromice.then((successMessage) => {
+            console.log(successMessage + " " + userLogin);
+            let setUserPassPromice = new Promise((resolve, reject) => {
               // Установка пароля для пользователя
               exec(commandSetUserPass, (error, stdout, stderr) => {
                 if (error) {
@@ -105,22 +105,43 @@ router.post("/uploadImportFile", confImportFile.single("importFile"), function (
                   console.log(`stderr: ${stderr}`);
                   return;
                 }
+                resolve("Пароль установился");
               });
-              // Установка квоты для пользователя
-              exec(commandSetUserQuota, (error, stdout, stderr) => {
-                if (error) {
-                  console.log(`error: ${error.message}`);
-                  return;
-                }
-                if (stderr) {
-                  console.log(`stderr: ${stderr}`);
-                  return;
-                }
-              });
-              return;
-            }
-          });
+            });
+            setUserPassPromice.then((successPass) => {
+              console.log(successPass + " " + userLogin);
 
+              let setUserIDPromice = new Promise((resolve, reject) => {
+                // Установка id пользователю
+                exec(commandSetID, (error, stdout, stderr) => {
+                  if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                  }
+                  if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                  }
+                  resolve("ID установился");
+                });
+              });
+
+              setUserIDPromice.then((successID) => {
+                console.log(successID + " " + userLogin);
+                // Установка квоты для пользователя
+                exec(commandSetUserQuota, (error, stdout, stderr) => {
+                  if (error) {
+                    console.log(`error: ${error.message}`);
+                    return;
+                  }
+                  if (stderr) {
+                    console.log(`stderr: ${stderr}`);
+                    return;
+                  }
+                });
+              });
+            });
+          });
           exec(commandAddUserWebDav, (error, stdout, stderr) => {
             if (error) {
               console.log(`error: ${error.message}`);
@@ -175,17 +196,19 @@ router.post("/uploadImportFile", confImportFile.single("importFile"), function (
           .pipe(csv())
           .on("data", function (data) {
             try {
-              users.push({
-                id: data.ID,
-                login: data.LOGIN,
-                email: data.EMAIL,
-                level: data.LEVEL,
-                telephone: data.TELEPHONE,
-                comment: data.COMMENT,
-                fio: data.FIO,
-                quota: data.QUOTA,
-                isLocked: data.ISLOCKED,
-              });
+              if (data.id != "") {
+                users.push({
+                  id: data.ID,
+                  login: data.LOGIN,
+                  email: data.EMAIL,
+                  level: data.LEVEL,
+                  telephone: data.TELEPHONE,
+                  comment: data.COMMENT,
+                  fio: data.FIO,
+                  quota: data.QUOTA,
+                  isLocked: data.ISLOCKED,
+                });
+              }
             } catch (err) {
               console.log("Ошибка записи файла");
             }

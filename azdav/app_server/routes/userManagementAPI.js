@@ -212,7 +212,7 @@ router.post("/deleteUser", (req, res) => {
         .pipe(csv())
         .on("data", function (data) {
           try {
-            if (req.body.deleteUserId != data.ID) {
+            if ((req.body.deleteUserId != data.ID) && (data.ID != "")) {
               usersList.push({
                 id: data.ID,
                 login: data.LOGIN,
