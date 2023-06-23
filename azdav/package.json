@@ -16,6 +16,6 @@
   },
   "homepage": "https://gitlab.com/gkaz/azdav#readme",
   "dependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^8.2.0"
   }
 }
